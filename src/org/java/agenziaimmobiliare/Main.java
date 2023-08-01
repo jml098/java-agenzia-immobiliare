@@ -110,7 +110,7 @@ public class Main {
                                             System.out.println(immobile);
 
                                             if (Prompt.ask(
-                                                    "Vuoi aggiungere interesse a questo immobile?")
+                                                            "Vuoi aggiungere interesse a questo immobile?")
                                                     .equalsIgnoreCase("si")
                                             ) immobile.aggiungiInteresse();
 
@@ -137,7 +137,9 @@ public class Main {
                                                 Immobile immobile = immobili.get(i);
                                                 immobiliOptions[i] = new MenuOption(
                                                         immobile.getClass().getSimpleName() + " " +
-                                                                immobile.getCodice()) {
+                                                                immobile.getCodice() + " " +
+                                                                immobile.getInteressi() + " interessati."
+                                                ) {
 
                                                     @Override
                                                     protected boolean task() {
@@ -179,8 +181,9 @@ public class Main {
                                 Immobile immobile = immobili.get(i);
                                 immobiliOptions[i] = new MenuOption(
                                         immobile.getClass().getSimpleName() + " " +
-                                                immobile.getCodice()) {
-
+                                                immobile.getCodice() + " " +
+                                                immobile.getInteressi() + " interessati."
+                                ) {
                                     @Override
                                     protected boolean task() {
                                         System.out.println(immobile);
@@ -216,8 +219,9 @@ public class Main {
                                 Immobile immobile = immobili.get(i);
                                 immobiliOptions[i] = new MenuOption(
                                         immobile.getClass().getSimpleName() + " " +
-                                                immobile.getCodice()) {
-
+                                                immobile.getCodice() + " " +
+                                                immobile.getInteressi() + " interessati."
+                                ) {
                                     @Override
                                     protected boolean task() {
                                         System.out.println(immobile);
