@@ -33,6 +33,17 @@ public class AgenziaImmobiliare {
         );
     }
 
+    public List<Immobile> getImmobiliInOrdineDiInteresse() throws ListaImmobiliVuotaException {
+        if (immobili.size() == 0) throw new ListaImmobiliVuotaException(
+                "La lista di immobili è vuota."
+        );
+
+        List<Immobile> sortedImmobili = new ArrayList<>(immobili);
+        sortedImmobili.sort((a,b) -> b.getInteressi() - a.getInteressi());
+
+        return sortedImmobili;
+    }
+
     public List<Immobile> getImmobiliConPiuInteresse() throws ListaImmobiliVuotaException {
         if (immobili.size() == 0) throw new ListaImmobiliVuotaException(
                 "La lista di immobili è vuota."

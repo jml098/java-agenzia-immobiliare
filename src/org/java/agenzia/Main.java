@@ -95,6 +95,7 @@ public class Main {
         System.out.println(agenzia.getImmobilePerCodice("def"));
         System.out.println(agenzia.getImmobilePerCodice("def"));
         System.out.println(agenzia.getImmobilePerCodice("def"));
+        System.out.println(agenzia.getImmobilePerCodice("def"));
         System.out.println(agenzia.getImmobilePerCodice("ghi"));
         System.out.println(agenzia.getImmobilePerCodice("ghi"));
 
@@ -102,5 +103,11 @@ public class Main {
         System.out.println(
                 "Immobili con più interesse: \n"
                         + agenzia.getImmobiliConPiuInteresse());
+
+
+        // Immobili in ordine d'interesse
+        System.out.println(
+                "Immobili con più interesse: \n"
+                        + agenzia.getImmobiliInOrdineDiInteresse());
     }
 }
