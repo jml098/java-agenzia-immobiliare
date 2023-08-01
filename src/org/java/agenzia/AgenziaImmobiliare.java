@@ -23,13 +23,30 @@ public class AgenziaImmobiliare {
                 immobili) {
 
             if (immobile.getCodice().equals(codice)) {
-                immobile.aggiungiInteresse();
                 return immobile;
             }
         }
 
         throw new ImmobileNonTrovatoException(
                 "Non esiste nessun immobile con codice: " + codice
+        );
+    }
+
+    public List<Immobile> getImmobiliPerCitta(String citta) throws ImmobileNonTrovatoException {
+        List<Immobile> immobiliPerCitta = new ArrayList<>();
+
+        for (Immobile immobile :
+                immobili) {
+
+            if (immobile.getCitta().equalsIgnoreCase(citta)) {
+                immobiliPerCitta.add(immobile);
+            }
+        }
+
+        if (immobiliPerCitta.size() > 0) return immobiliPerCitta;
+
+        throw new ImmobileNonTrovatoException(
+                "Non esiste nessun immobile a: " + citta
         );
     }
 

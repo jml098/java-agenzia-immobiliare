@@ -1,113 +1,208 @@
 package org.java.agenzia;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 public class Main {
     public static void main(String[] args) {
+        Prompt.setLocale(Locale.US);
         AgenziaImmobiliare agenzia = new AgenziaImmobiliare();
 
-        //Aggiunta Box
-        Box box = new Box(
-                "abc",
-                "indirizzo1",
-                "1",
-                "Milano",
-                100,
-                2);
 
-        // Reimpostazione superficie Box
-        box.reimpostaSuperficie(110);
-        agenzia.aggiungiImmobile(box);
+        new Menu("Benvenuto all'agenzia immobiliare GenerationItaly!",
+                new MenuOption("Aggiungi Immobile") {
+                    boolean task() {
 
-        //Aggiunta Abitazione
-        Abitazione abitazione = new Abitazione(
-                "def",
-                "indirizzo2",
-                "2",
-                "Torino",
-                120,
-                3);
+                        new Menu("Scegli tipo di immobile",
+                                new MenuOption("Box") {
+                                    @Override
+                                    boolean task() {
+                                        try {
+                                            agenzia.aggiungiImmobile(
+                                                    new Box(
+                                                            Prompt.ask("Inserisci codice: "),
+                                                            Prompt.ask("Inserisci indirizzo: "),
+                                                            Prompt.ask("Inserisci CAP: "),
+                                                            Prompt.ask("Inserisci Città: "),
+                                                            Prompt.askInt("Inserisci metri quadri: "),
+                                                            Prompt.askInt("Inserisci posti auto: ")
+                                                    ));
+                                        } catch (ConflittoCodiceImmobileException | IllegalArgumentException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+                                        System.out.println("Immobile aggiunto");
 
-        // Reimpostazione superficie abitazione
-        abitazione.reimpostaSuperficie(150);
-        agenzia.aggiungiImmobile(abitazione);
+                                        return true;
+                                    }
+                                },
+                                new MenuOption("Abitazione") {
+                                    @Override
+                                    boolean task() {
+                                        try {
+                                            agenzia.aggiungiImmobile(
+                                                    new Abitazione(
+                                                            Prompt.ask("Inserisci codice: "),
+                                                            Prompt.ask("Inserisci indirizzo: "),
+                                                            Prompt.ask("Inserisci CAP: "),
+                                                            Prompt.ask("Inserisci Città: "),
+                                                            Prompt.askInt("Inserisci metri quadri: "),
+                                                            Prompt.askInt("Inserisci numero vani: ")
+                                                    ));
+                                        } catch (ConflittoCodiceImmobileException | IllegalArgumentException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+                                        System.out.println("Immobile aggiunto");
+
+                                        return true;
+                                    }
+                                },
+                                new MenuOption("Villa") {
+                                    @Override
+                                    boolean task() {
+                                        try {
+                                            agenzia.aggiungiImmobile(
+                                                    new Villa(
+                                                            Prompt.ask("Inserisci codice: "),
+                                                            Prompt.ask("Inserisci indirizzo: "),
+                                                            Prompt.ask("Inserisci CAP: "),
+                                                            Prompt.ask("Inserisci Città: "),
+                                                            Prompt.askInt("Inserisci metri quadri: "),
+                                                            Prompt.askInt("Inserisci numero vani: "),
+                                                            Prompt.askInt("Inserisci metri quadri giardino: ")
+                                                    ));
+
+                                            System.out.println("Immobile aggiunto");
+                                        } catch (ConflittoCodiceImmobileException | IllegalArgumentException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+
+                                        return true;
+                                    }
+                                }
+
+                        ).start();
+
+                        return false;
+                    }
+                },
+                new MenuOption("Cerca Immobile") {
+                    boolean task() {
+                        new Menu("Scegli tipologia di ricerca",
+                                new MenuOption("Per codice") {
+                                    @Override
+                                    boolean task() {
+                                        try {
+                                            Immobile immobile = agenzia.getImmobilePerCodice(
+                                                    Prompt.ask("Inserisci il codice: ")
+                                            );
+                                            System.out.println(immobile);
+
+                                            if (Prompt.ask(
+                                                    "Vuoi aggiungere interesse a questo immobile?")
+                                                    .equalsIgnoreCase("si")
+                                            ) immobile.aggiungiInteresse();
+
+                                        } catch (ImmobileNonTrovatoException e) {
+                                            System.out.println(e.getMessage());
+                                        }
 
 
-        // Aggiunta di un immobile con codice già presente
-        try {
-            agenzia.aggiungiImmobile(new Villa(
-                    "def",
-                    "indirizzo2",
-                    "2",
-                    "Torino",
-                    100,
-                    3,
-                    60)
-            );
+                                        return true;
+                                    }
+                                },
+                                new MenuOption("Per città") {
+                                    @Override
+                                    boolean task() {
+                                        try {
+                                            List<Immobile> immobili = agenzia.getImmobiliPerCitta(
+                                                    Prompt.ask("Inserisci città: ")
+                                            );
+                                            System.out.println(immobili);
 
-        } catch (ConflittoCodiceImmobileException e) {
-            System.out.println(e.getMessage());
+                                        } catch (ImmobileNonTrovatoException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+
+                                        return true;
+                                    }
+                                }
+                        ).start();
+
+                        return false;
+                    }
+                },
+                new MenuOption("Mostra Immobili più richiesti") {
+                    boolean task() {
+                        try {
+                            System.out.println(agenzia.getImmobiliConPiuInteresse());
+                        } catch (ListaImmobiliVuotaException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        return false;
+                    }
+                },
+                new MenuOption("Mostra Immobili in ordine di interesse") {
+                    boolean task() {
+                        try {
+                            System.out.println(agenzia.getImmobiliInOrdineDiInteresse());
+                        } catch (ListaImmobiliVuotaException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                        return false;
+                    }
+                }
+        ).start();
+    }
+
+    public static class Menu {
+        List<MenuOption> options = new ArrayList<>();
+        private String message;
+
+        public Menu(String mesasge, MenuOption... options) {
+            this.options.add(new MenuOption("Exit") {
+                @Override
+                boolean task() {
+                    return true;
+                }
+            });
+            this.options.addAll(Arrays.asList(options));
+            this.message = mesasge;
         }
 
-        // Aggiunta di un immobile con metri quadri non validi
-        try {
-            agenzia.aggiungiImmobile(new Villa(
-                    "def",
-                    "indirizzo2",
-                    "2",
-                    "Torino",
-                    -12,
-                    3,
-                    60)
-            );
+        public void start() {
+            boolean exit;
+            do {
+                System.out.println(message);
 
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+                for (int i = 1; i < options.size(); i++) {
+                    MenuOption option = options.get(i);
+
+                    System.out.println(i + " - " + option.getName());
+                }
+
+                System.out.println("0 - Exit");
+
+                exit = options.get(Prompt.askInt("> ")).task();
+
+            } while (!exit);
+        }
+    }
+
+    public static abstract class MenuOption {
+        private String name;
+
+        public MenuOption(String name) {
+            this.name = name;
         }
 
-        //Aggiunta Villa
-        Villa villa = new Villa(
-                "ghi",
-                "indirizzo3",
-                "3",
-                "Venezia",
-                180,
-                3,
-                50);
+        abstract boolean task();
 
-        // Reimpostazione superficie villa
-        villa.reimpostaSuperficie(120, 30);
-        agenzia.aggiungiImmobile(villa);
-
-
-        // Ricerca per codice
-        System.out.println(agenzia.getImmobilePerCodice("abc"));
-        System.out.println(agenzia.getImmobilePerCodice("abc"));
-        System.out.println(agenzia.getImmobilePerCodice("abc"));
-        System.out.println(agenzia.getImmobilePerCodice("abc"));
-
-        // Ricerca di un codice non esistente
-        try {
-            System.out.println(agenzia.getImmobilePerCodice("3412"));
-        } catch (ImmobileNonTrovatoException e) {
-            System.out.println(e.getMessage());
+        public String getName() {
+            return name;
         }
-
-        // Ricerca per codice
-        System.out.println(agenzia.getImmobilePerCodice("def"));
-        System.out.println(agenzia.getImmobilePerCodice("def"));
-        System.out.println(agenzia.getImmobilePerCodice("def"));
-        System.out.println(agenzia.getImmobilePerCodice("def"));
-        System.out.println(agenzia.getImmobilePerCodice("ghi"));
-        System.out.println(agenzia.getImmobilePerCodice("ghi"));
-
-        // Immobili con più interesse
-        System.out.println(
-                "Immobili con più interesse: \n"
-                        + agenzia.getImmobiliConPiuInteresse());
-
-
-        // Immobili in ordine d'interesse
-        System.out.println(
-                "Immobili in ordine d'interesse: \n"
-                        + agenzia.getImmobiliInOrdineDiInteresse());
     }
 }
