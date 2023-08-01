@@ -1,4 +1,9 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.agenzia;
+
+import org.java.agenziaimmobiliare.exceptions.ConflittoCodiceImmobileException;
+import org.java.agenziaimmobiliare.exceptions.ImmobileNonTrovatoException;
+import org.java.agenziaimmobiliare.exceptions.ListaImmobiliVuotaException;
+import org.java.agenziaimmobiliare.immobili.Immobile;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.immobili;
 
 public class Abitazione extends Immobile {
     private int numeroVani;

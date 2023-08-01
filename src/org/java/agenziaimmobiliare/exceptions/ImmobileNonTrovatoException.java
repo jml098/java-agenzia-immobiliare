@@ -1,4 +1,4 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.exceptions;
 
 public class ImmobileNonTrovatoException extends RuntimeException {
     public ImmobileNonTrovatoException(String message) {

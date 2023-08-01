@@ -1,4 +1,11 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare;
+
+import org.java.agenziaimmobiliare.agenzia.AgenziaImmobiliare;
+import org.java.agenziaimmobiliare.exceptions.ConflittoCodiceImmobileException;
+import org.java.agenziaimmobiliare.exceptions.ImmobileNonTrovatoException;
+import org.java.agenziaimmobiliare.immobili.Abitazione;
+import org.java.agenziaimmobiliare.immobili.Box;
+import org.java.agenziaimmobiliare.immobili.Villa;
 
 public class Tests {
     public static void main(String[] args) {

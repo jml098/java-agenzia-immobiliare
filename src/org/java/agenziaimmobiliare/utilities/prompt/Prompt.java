@@ -1,4 +1,4 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.utilities.prompt;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

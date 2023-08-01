@@ -1,7 +1,17 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.java.agenziaimmobiliare.agenzia.AgenziaImmobiliare;
+import org.java.agenziaimmobiliare.exceptions.ConflittoCodiceImmobileException;
+import org.java.agenziaimmobiliare.exceptions.ImmobileNonTrovatoException;
+import org.java.agenziaimmobiliare.exceptions.ListaImmobiliVuotaException;
+import org.java.agenziaimmobiliare.immobili.Abitazione;
+import org.java.agenziaimmobiliare.immobili.Box;
+import org.java.agenziaimmobiliare.immobili.Immobile;
+import org.java.agenziaimmobiliare.immobili.Villa;
+import org.java.agenziaimmobiliare.utilities.prompt.Prompt;
+import org.java.agenziaimmobiliare.utilities.menu.Menu;
+import org.java.agenziaimmobiliare.utilities.menu.MenuOption;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -13,12 +23,12 @@ public class Main {
 
         new Menu("Benvenuto all'agenzia immobiliare GenerationItaly!",
                 new MenuOption("Aggiungi Immobile") {
-                    boolean task() {
+                    protected boolean task() {
 
                         new Menu("Scegli tipo di immobile",
                                 new MenuOption("Box") {
                                     @Override
-                                    boolean task() {
+                                    protected boolean task() {
                                         try {
                                             agenzia.aggiungiImmobile(
                                                     new Box(
@@ -39,7 +49,7 @@ public class Main {
                                 },
                                 new MenuOption("Abitazione") {
                                     @Override
-                                    boolean task() {
+                                    protected boolean task() {
                                         try {
                                             agenzia.aggiungiImmobile(
                                                     new Abitazione(
@@ -60,7 +70,7 @@ public class Main {
                                 },
                                 new MenuOption("Villa") {
                                     @Override
-                                    boolean task() {
+                                    protected boolean task() {
                                         try {
                                             agenzia.aggiungiImmobile(
                                                     new Villa(
@@ -88,11 +98,11 @@ public class Main {
                     }
                 },
                 new MenuOption("Cerca Immobile") {
-                    boolean task() {
+                    protected boolean task() {
                         new Menu("Scegli tipologia di ricerca",
                                 new MenuOption("Per codice") {
                                     @Override
-                                    boolean task() {
+                                    protected boolean task() {
                                         try {
                                             Immobile immobile = agenzia.getImmobilePerCodice(
                                                     Prompt.ask("Inserisci il codice: ")
@@ -114,7 +124,7 @@ public class Main {
                                 },
                                 new MenuOption("Per città") {
                                     @Override
-                                    boolean task() {
+                                    protected boolean task() {
                                         try {
                                             List<Immobile> immobili = agenzia.getImmobiliPerCitta(
                                                     Prompt.ask("Inserisci città: ")
@@ -134,7 +144,7 @@ public class Main {
                     }
                 },
                 new MenuOption("Mostra Immobili più richiesti") {
-                    boolean task() {
+                    protected boolean task() {
                         try {
                             System.out.println(agenzia.getImmobiliConPiuInteresse());
                         } catch (ListaImmobiliVuotaException e) {
@@ -145,7 +155,7 @@ public class Main {
                     }
                 },
                 new MenuOption("Mostra Immobili in ordine di interesse") {
-                    boolean task() {
+                    protected boolean task() {
                         try {
                             System.out.println(agenzia.getImmobiliInOrdineDiInteresse());
                         } catch (ListaImmobiliVuotaException e) {
@@ -158,51 +168,5 @@ public class Main {
         ).start();
     }
 
-    public static class Menu {
-        List<MenuOption> options = new ArrayList<>();
-        private String message;
 
-        public Menu(String mesasge, MenuOption... options) {
-            this.options.add(new MenuOption("Exit") {
-                @Override
-                boolean task() {
-                    return true;
-                }
-            });
-            this.options.addAll(Arrays.asList(options));
-            this.message = mesasge;
-        }
-
-        public void start() {
-            boolean exit;
-            do {
-                System.out.println(message);
-
-                for (int i = 1; i < options.size(); i++) {
-                    MenuOption option = options.get(i);
-
-                    System.out.println(i + " - " + option.getName());
-                }
-
-                System.out.println("0 - Exit");
-
-                exit = options.get(Prompt.askInt("> ")).task();
-
-            } while (!exit);
-        }
-    }
-
-    public static abstract class MenuOption {
-        private String name;
-
-        public MenuOption(String name) {
-            this.name = name;
-        }
-
-        abstract boolean task();
-
-        public String getName() {
-            return name;
-        }
-    }
 }

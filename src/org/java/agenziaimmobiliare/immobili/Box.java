@@ -1,4 +1,4 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.immobili;
 
 public class Box extends Immobile {
     private int numeroPostiAuto;

@@ -1,4 +1,4 @@
-package org.java.agenzia;
+package org.java.agenziaimmobiliare.immobili;
 
 public class Immobile {
     private String codice;
