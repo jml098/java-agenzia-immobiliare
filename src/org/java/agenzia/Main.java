@@ -107,7 +107,7 @@ public class Main {
 
         // Immobili in ordine d'interesse
         System.out.println(
-                "Immobili con più interesse: \n"
+                "Immobili in ordine d'interesse: \n"
                         + agenzia.getImmobiliInOrdineDiInteresse());
     }
 }
