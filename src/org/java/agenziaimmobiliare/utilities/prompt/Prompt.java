@@ -30,7 +30,7 @@ public final class Prompt {
 
     /* Setters */
     public static void setErrorMessage(String errorMessage) {
-        errorMessage = errorMessage;
+        Prompt.errorMessage = errorMessage;
     }
 
     public static void setLocale(Locale locale) {

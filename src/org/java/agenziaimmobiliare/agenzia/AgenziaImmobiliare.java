@@ -11,7 +11,6 @@ import java.util.List;
 public class AgenziaImmobiliare {
     private final List<Immobile> immobili = new ArrayList<>();
 
-
     public void aggiungiImmobile(Immobile immobile) throws ConflittoCodiceImmobileException {
         if (controllaDuplicati(immobile.getCodice())) {
             throw new ConflittoCodiceImmobileException(
