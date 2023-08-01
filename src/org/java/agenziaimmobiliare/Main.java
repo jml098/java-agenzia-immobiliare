@@ -131,11 +131,36 @@ public class Main {
                                             );
                                             System.out.println(immobili);
 
+                                            MenuOption[] immobiliOptions = new MenuOption[immobili.size()];
+
+                                            for (int i = 0; i < immobili.size(); i++) {
+                                                Immobile immobile = immobili.get(i);
+                                                immobiliOptions[i] = new MenuOption(
+                                                        immobile.getClass().getSimpleName() + " " +
+                                                                immobile.getCodice()) {
+
+                                                    @Override
+                                                    protected boolean task() {
+                                                        System.out.println(immobile);
+
+                                                        if (Prompt.ask(
+                                                                        "Vuoi aggiungere interesse a questo immobile?")
+                                                                .equalsIgnoreCase("si")
+                                                        ) immobile.aggiungiInteresse();
+
+
+                                                        return false;
+                                                    }
+                                                };
+                                            }
+
+                                            new Menu("Scegli immobile", immobiliOptions).start();
+
                                         } catch (ImmobileNonTrovatoException e) {
                                             System.out.println(e.getMessage());
                                         }
 
-                                        return true;
+                                        return false;
                                     }
                                 }
                         ).start();
@@ -146,7 +171,32 @@ public class Main {
                 new MenuOption("Mostra Immobili più richiesti") {
                     protected boolean task() {
                         try {
-                            System.out.println(agenzia.getImmobiliConPiuInteresse());
+                            List<Immobile> immobili = agenzia.getImmobiliConPiuInteresse();
+
+                            MenuOption[] immobiliOptions = new MenuOption[immobili.size()];
+
+                            for (int i = 0; i < immobili.size(); i++) {
+                                Immobile immobile = immobili.get(i);
+                                immobiliOptions[i] = new MenuOption(
+                                        immobile.getClass().getSimpleName() + " " +
+                                                immobile.getCodice()) {
+
+                                    @Override
+                                    protected boolean task() {
+                                        System.out.println(immobile);
+
+                                        if (Prompt.ask(
+                                                        "Vuoi aggiungere interesse a questo immobile?")
+                                                .equalsIgnoreCase("si")
+                                        ) immobile.aggiungiInteresse();
+
+
+                                        return false;
+                                    }
+                                };
+                            }
+
+                            new Menu("Scegli immobile", immobiliOptions).start();
                         } catch (ListaImmobiliVuotaException e) {
                             System.out.println(e.getMessage());
                         }
@@ -157,7 +207,33 @@ public class Main {
                 new MenuOption("Mostra Immobili in ordine di interesse") {
                     protected boolean task() {
                         try {
-                            System.out.println(agenzia.getImmobiliInOrdineDiInteresse());
+
+                            List<Immobile> immobili = agenzia.getImmobiliInOrdineDiInteresse();
+
+                            MenuOption[] immobiliOptions = new MenuOption[immobili.size()];
+
+                            for (int i = 0; i < immobili.size(); i++) {
+                                Immobile immobile = immobili.get(i);
+                                immobiliOptions[i] = new MenuOption(
+                                        immobile.getClass().getSimpleName() + " " +
+                                                immobile.getCodice()) {
+
+                                    @Override
+                                    protected boolean task() {
+                                        System.out.println(immobile);
+
+                                        if (Prompt.ask(
+                                                        "Vuoi aggiungere interesse a questo immobile?")
+                                                .equalsIgnoreCase("si")
+                                        ) immobile.aggiungiInteresse();
+
+
+                                        return false;
+                                    }
+                                };
+                            }
+
+                            new Menu("Scegli immobile", immobiliOptions).start();
                         } catch (ListaImmobiliVuotaException e) {
                             System.out.println(e.getMessage());
                         }
