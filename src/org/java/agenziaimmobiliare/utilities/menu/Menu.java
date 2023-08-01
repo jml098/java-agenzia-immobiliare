@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Menu {
     List<MenuOption> options = new ArrayList<>();
-    private String message;
+    private final String message;
 
-    public Menu(String mesasge, MenuOption... options) {
+    public Menu(String message, MenuOption... options) {
         this.options.add(new MenuOption("Exit") {
             @Override
             protected boolean task() {
@@ -18,7 +18,7 @@ public class Menu {
             }
         });
         this.options.addAll(Arrays.asList(options));
-        this.message = mesasge;
+        this.message = message;
     }
 
     public void start() {
