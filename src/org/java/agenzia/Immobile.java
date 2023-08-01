@@ -34,8 +34,6 @@ public class Immobile {
         this.metriQuadri = superficie;
     }
 
-
-
     public String getCodice() {
         return codice;
     }
@@ -81,11 +79,10 @@ public class Immobile {
         return interessi;
     }
 
-    public void setInteressi(int interessi) {
+    public void setInteressi(int interessi) throws IllegalArgumentException {
+        if (interessi < 0) throw new IllegalArgumentException("Interessi non può essere meno di 0");
         this.interessi = interessi;
     }
-
-
 
     @Override
     public String toString() {

@@ -9,9 +9,11 @@ public class Villa extends Abitazione{
                  String citta,
                  int metriQuadri,
                  int numeroVani,
-                 int metriQuadriGiardino) {
+                 int metriQuadriGiardino) throws IllegalArgumentException {
 
         super(codice, indirizzo, cap, citta, metriQuadri, numeroVani);
+
+        if (metriQuadriGiardino < 0) throw new IllegalArgumentException("Metri quadri giardino non può essere minore di 0");
         this.metriQuadriGiardino = metriQuadriGiardino;
     }
 
