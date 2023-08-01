@@ -1,7 +1,7 @@
 package org.java.agenzia;
 
-public class ConflittoCodiceImmobileException extends RuntimeException {
-    public ConflittoCodiceImmobileException(String message) {
+public class ListaImmobiliVuotaException extends RuntimeException {
+    public ListaImmobiliVuotaException(String message) {
         super(message);
     }
 }
